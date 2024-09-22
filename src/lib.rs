@@ -20,12 +20,38 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    println!("Searching for '{}'", config.query);
-    println!("in file {}", config.file_path);
+    // println!("Searching for '{}'", config.query);
+    // println!("in file {}", config.file_path);
 
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("containing text:\n{contents}");
+    // println!("containing text:\n{contents}");
     
     Ok(())
+}
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    vec![]
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        // SETUP
+        let query = "pen";
+        let contents = "\
+            Haha!\
+            Can't catch me for a penny cup of tea!\
+            Goodbye.";
+        let expected = vec!["Can't catch me for a penny cup of tea!"];
+
+        // CALL
+        let result = search(query, contents);
+        
+        // ASSERT
+        assert_eq!(result, expected);
+    }
 }
